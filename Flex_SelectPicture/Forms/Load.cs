@@ -49,6 +49,8 @@ namespace Flex_SelectPicture
         //读取配置信息
         private void loadConfig()
         {
+            try
+            {
             string filepath = Application.StartupPath + @"\CONFIG.ini";
             if (!File.Exists(filepath))
             {
@@ -147,6 +149,12 @@ namespace Flex_SelectPicture
             if (GlobalVar.gl_val_Machine1_Check == "1") checkBox_Machine1.Checked = true;
             if (GlobalVar.gl_val_Machine2_Check == "1") checkBox_Machine2.Checked = true;
             if (GlobalVar.gl_val_Machine3_Check == "1") checkBox_Machine3.Checked = true;
+            }catch(Exception ex)
+            {
+                myf.writeErrorLog("读取Config文件异常:"+ex.Message);
+                MessageBox.Show("读取Config文件异常:" + ex.Message);
+                //System.Environment.Exit(0);
+            }
         }
 
         private void btn_Cancel_Click(object sender, EventArgs e)
