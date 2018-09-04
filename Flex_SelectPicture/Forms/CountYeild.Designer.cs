@@ -59,6 +59,7 @@
             this.Controls.Add(this.dtp_analyDate);
             this.Name = "CountYeild";
             this.Text = "CountYeild";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.CountYeild_Load);
             this.ResumeLayout(false);
 

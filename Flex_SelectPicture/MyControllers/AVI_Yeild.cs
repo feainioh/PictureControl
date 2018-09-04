@@ -284,7 +284,7 @@ namespace Flex_SelectPicture
                 #endregion
                 #region 绘制从站频率图
                 //绑定数据
-                chart_S2.Series[1].Points.DataBindY(rate2);
+                chart_S3.Series[1].Points.DataBindY(rate2);
                 chart_S3.Series[0].Points.DataBindXY(x2, y2);
                 chart_S3.Series[0].Points[0].Color = Color.Black;
                 chart_S3.Series[0].Palette = ChartColorPalette.Bright;
@@ -817,7 +817,7 @@ namespace Flex_SelectPicture
             chart_S3.Titles[0].ForeColor = Color.Black;
             chart_S3.Titles[0].Font = new Font("微软雅黑", 12f, FontStyle.Regular);
             chart_S3.Titles[0].Alignment = ContentAlignment.TopCenter;
-            chart_S3.Titles.Add("合计：" + S2_TestItem.Count + " 项,统计前十项");
+            chart_S3.Titles.Add("合计：" + S3_TestItem.Count + " 项,统计前十项");
             chart_S3.Titles[1].ForeColor = Color.Black;
             chart_S3.Titles[1].Font = new Font("微软雅黑", 8f, FontStyle.Regular);
             chart_S3.Titles[1].Alignment = ContentAlignment.TopRight;
