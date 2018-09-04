@@ -54,8 +54,10 @@
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.lb_Yeild = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripTextBox5 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripTextBox4 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel8 = new System.Windows.Forms.ToolStripLabel();
+            this.lb_Num = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
+            this.lb_NG = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.analy_Progress = new System.Windows.Forms.ToolStripProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -97,8 +99,10 @@
             this.toolStripTextBox2,
             this.toolStripLabel3,
             this.lb_Yeild,
-            this.toolStripTextBox5,
-            this.toolStripTextBox4,
+            this.toolStripLabel8,
+            this.lb_Num,
+            this.toolStripLabel6,
+            this.lb_NG,
             this.toolStripLabel4,
             this.analy_Progress});
             this.toolStrip_AVI_YEILD.Location = new System.Drawing.Point(0, 0);
@@ -171,19 +175,33 @@
             this.lb_Yeild.Size = new System.Drawing.Size(55, 22);
             this.lb_Yeild.Text = "100%";
             // 
-            // toolStripTextBox5
+            // toolStripLabel8
             // 
-            this.toolStripTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.toolStripTextBox5.Enabled = false;
-            this.toolStripTextBox5.Name = "toolStripTextBox5";
-            this.toolStripTextBox5.Size = new System.Drawing.Size(100, 25);
+            this.toolStripLabel8.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolStripLabel8.Name = "toolStripLabel8";
+            this.toolStripLabel8.Size = new System.Drawing.Size(44, 22);
+            this.toolStripLabel8.Text = " 总数:";
             // 
-            // toolStripTextBox4
+            // lb_Num
             // 
-            this.toolStripTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.toolStripTextBox4.Enabled = false;
-            this.toolStripTextBox4.Name = "toolStripTextBox4";
-            this.toolStripTextBox4.Size = new System.Drawing.Size(100, 25);
+            this.lb_Num.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_Num.Name = "lb_Num";
+            this.lb_Num.Size = new System.Drawing.Size(30, 22);
+            this.lb_Num.Text = "00";
+            // 
+            // toolStripLabel6
+            // 
+            this.toolStripLabel6.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolStripLabel6.Name = "toolStripLabel6";
+            this.toolStripLabel6.Size = new System.Drawing.Size(44, 22);
+            this.toolStripLabel6.Text = " 不良:";
+            // 
+            // lb_NG
+            // 
+            this.lb_NG.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_NG.Name = "lb_NG";
+            this.lb_NG.Size = new System.Drawing.Size(30, 22);
+            this.lb_NG.Text = "00";
             // 
             // toolStripLabel4
             // 
@@ -440,8 +458,6 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox3;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripLabel lb_Yeild;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox5;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox4;
         private System.Windows.Forms.ToolStripProgressBar analy_Progress;
         private System.Windows.Forms.ToolStripLabel toolStripLabel4;
         private System.Windows.Forms.TabPage tp_station_s2;
@@ -453,5 +469,9 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_S4;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_S2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel_s3;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel8;
+        private System.Windows.Forms.ToolStripLabel lb_Num;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel6;
+        private System.Windows.Forms.ToolStripLabel lb_NG;
     }
 }

@@ -370,7 +370,8 @@ namespace Flex_SelectPicture
                 BeginInvoke(new Action(() =>
                 {
                     lb_Yeild.Text = yeild.ToString("00.00") + "%";
-
+                    lb_Num.Text = total.ToString();
+                    lb_NG.Text = (total - pass).ToString();
                     for (int i = 0; i < stationsCount; i++)
                     {
                         if (chart_List_s1[i].Titles.Count>2) chart_List_s1[i].Titles[2].Text = "工站良率：" + stations_List[i].station_yeild + " %";

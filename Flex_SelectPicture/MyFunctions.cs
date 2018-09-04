@@ -97,7 +97,7 @@ namespace Flex_SelectPicture
             FileInfo[] files = dir.GetFiles("*.txt");
             foreach (FileInfo file in files)
             {
-                if ((DateTime.Now.Subtract(file.LastWriteTime)).Days > 60)
+                if ((DateTime.Now.Subtract(file.LastWriteTime)).Days > 10)
                 {
                     file.Delete();
                 }
@@ -200,8 +200,6 @@ namespace Flex_SelectPicture
             {
                 if (pic_S2.Contains(path)) pic_S2.Remove(path);
             }
-          //  MessageBox.Show(pic_S1.Count.ToString()+pic_S2.Count.ToString()+pic_S3.Count.ToString());
-
             if (pic_S1.Count > 1)
             {
                 for (int j = 0; j < pic_S1.Count - 1; j++)
