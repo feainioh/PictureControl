@@ -147,10 +147,10 @@ namespace Flex_SelectPicture
                 int tmp = 0;
                 foreach (KeyValuePair<string, int> kv in dicSort)
                 {
-                    if (tmp < 10)
+                    if (tmp < 20)
                     {
                         x.Add(kv.Key);
-                        y.Add(kv.Value); double r = Math.Round((double)kv.Value / (double)(fail), 4);
+                        y.Add(kv.Value); double r = Math.Round((double)kv.Value / (double)(total), 4);
                         rate.Add(r * 100);
                         tmp++;
                     }
@@ -159,10 +159,10 @@ namespace Flex_SelectPicture
                 tmp = 0;
                 foreach (KeyValuePair<string, int> kv in dicSorting)
                 {
-                    if (tmp < 10)
+                    if (tmp < 20)
                     {
                         x1.Add(kv.Key);
-                        y1.Add(kv.Value); double r = Math.Round((double)kv.Value / (double)(fail), 4);
+                        y1.Add(kv.Value); double r = Math.Round((double)kv.Value / (double)(total), 4);
                         rate1.Add(r * 100);
                         tmp++;
                     }
@@ -171,11 +171,11 @@ namespace Flex_SelectPicture
                 tmp = 0;
                 foreach (KeyValuePair<string, int> kv in dicSorting_s3)
                 {
-                    if (tmp < 10)
+                    if (tmp < 20)
                     {
                         x2.Add(kv.Key);
                         y2.Add(kv.Value);
-                        double r = Math.Round((double)kv.Value/(double)(fail),4);
+                        double r = Math.Round((double)kv.Value/(double)(total),4);
                         rate2.Add(r*100);
                         tmp++;
                     }

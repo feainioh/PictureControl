@@ -35,7 +35,7 @@ namespace Flex_SelectPicture
             if (wetherExportPic) lb_ExportPic.Text = "是";
             else lb_ExportPic.Text = "否";
         }
-        public AVI_Analysis(string AVI,DateTime analysisDate)
+        public AVI_Analysis(string AVI, DateTime analysisDate)
         {
             this.AVI = AVI;
             this.analysisdate = analysisDate;
@@ -43,7 +43,7 @@ namespace Flex_SelectPicture
             switch (AVI)
             {
                 case "1":
-                    lb_S1TestItems.Text = GlobalVar.AVI1_S1_TestItems.Count.ToString()+"项";
+                    lb_S1TestItems.Text = GlobalVar.AVI1_S1_TestItems.Count.ToString() + "项";
                     lb_S2TestItems.Text = GlobalVar.AVI1_S2_TestItems.Count.ToString() + "项";
                     break;
                 case "2":
@@ -70,7 +70,7 @@ namespace Flex_SelectPicture
             {
                 case "1":
                     progress_Analysis.Value = 20;
-                    LoadAVIResultByDate(GlobalVar.gl_val_Machine1_S1_TestResult,analysisDate);
+                    LoadAVIResultByDate(GlobalVar.gl_val_Machine1_S1_TestResult, analysisDate);
                     this.path_TestResult = GlobalVar.gl_val_Machine1_S1_TestResult;
                     break;
                 case "2":
@@ -80,7 +80,7 @@ namespace Flex_SelectPicture
                     break;
                 case "3":
                     progress_Analysis.Value = 20;
-                    LoadAVIResultByDate(GlobalVar.gl_val_Machine3_S1_TestResult,analysisDate);
+                    LoadAVIResultByDate(GlobalVar.gl_val_Machine3_S1_TestResult, analysisDate);
                     this.path_TestResult = GlobalVar.gl_val_Machine3_S1_TestResult;
                     break;
                 default:
@@ -90,20 +90,28 @@ namespace Flex_SelectPicture
         public DataTable GetAllDataTable(DataSet ds)
         {
             DataTable newDataTable = ds.Tables[0].Clone();                //创建新表 克隆以有表的架构。
-            object[] objArray = new object[newDataTable.Columns.Count];   //定义与表列数相同的对象数组 存放表的一行的值。
-            List<object> objList = new List<object>();
-            for (int i = 0; i < ds.Tables.Count; i++)
+            try
             {
-                //newDataTable = ds.Tables[i].Clone();
-                //objArray = new object[newDataTable.Columns.Count];
-                for (int j = 0; j < ds.Tables[i].Rows.Count; j++)
+                object[] objArray = new object[newDataTable.Columns.Count];   //定义与表列数相同的对象数组 存放表的一行的值。
+                List<object> objList = new List<object>();
+                for (int i = 0; i < ds.Tables.Count; i++)
                 {
-                    //ds.Tables[i].Rows[j].ItemArray.CopyTo(objArray, 0);    //将表的一行的值存放数组中。
-                    objList.Add(ds.Tables[i].Rows[j].ItemArray);
-                    newDataTable.Rows.Add(objList.ToArray());                       //将数组的值添加到新表中。
+                    //newDataTable = ds.Tables[i].Clone();
+                    //objArray = new object[newDataTable.Columns.Count];
+                    for (int j = 0; j < ds.Tables[i].Rows.Count; j++)
+                    {
+                        //ds.Tables[i].Rows[j].ItemArray.CopyTo(objArray, 0);    //将表的一行的值存放数组中。
+                        objList.Add(ds.Tables[i].Rows[j].ItemArray);
+                        newDataTable.Rows.Add(objList.ToArray());                       //将数组的值添加到新表中。
+                    }
                 }
+                return newDataTable;
             }
-            return newDataTable;                                           //返回新表。
+            catch (Exception ex)
+            {
+                MessageBox.Show("读取异常:" + ex.ToString());
+                return newDataTable;
+            }                                     //返回新表。
         }
         /// <summary>
         /// 读取指定机台指定日期的测试结果
@@ -121,11 +129,11 @@ namespace Flex_SelectPicture
                 //f.Close();
                 return;
             }
-            string[] files = Directory.GetFiles(folderPath,"*.csv");
+            string[] files = Directory.GetFiles(folderPath, "*.csv");
             AllTestItems(files[0]);//获取所有测试项
             analysisData.Clear();
-                DataSet ds = new DataSet();
-            foreach(string fullPath in files)
+            DataSet ds = new DataSet();
+            foreach (string fullPath in files)
             {
                 ds.Tables.Add(OpenCSV(fullPath));
                 //string filePath = fullPath.Substring(0, fullPath.LastIndexOf('\\'));
@@ -151,14 +159,14 @@ namespace Flex_SelectPicture
                 //        if (conn.State == System.Data.ConnectionState.Open)
                 //            conn.Close();
                 //    }
-                
+
             }
             progress_Analysis.Value += 20;
-            analysisData=GetAllDataTable(ds);
+            analysisData = GetAllDataTable(ds);
             if (analysisData.Columns.Count > 10)
             {
                 int temp = 1;
-                for(int i=10;i<analysisData.Columns.Count;i++)
+                for (int i = 10; i < analysisData.Columns.Count; i++)
                 {
                     ListViewItem lvi = new ListViewItem();
                     lvi.Text = temp.ToString();
@@ -173,7 +181,7 @@ namespace Flex_SelectPicture
         private void AllTestItems(string path)
         {
             FileStream fs = new FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            StreamReader sr = new StreamReader(fs,Encoding.Default);
+            StreamReader sr = new StreamReader(fs, Encoding.Default);
             string temp = sr.ReadLine();
             if (temp != null) testItems = temp.Split(',').ToList();
             sr.Close();
@@ -187,12 +195,12 @@ namespace Flex_SelectPicture
         public void Analysis_DateChange(DateTime date)
         {
             this.analysisdate = date;
-            LoadResultByDate(date);            
+            LoadResultByDate(date);
         }
 
 
 
-        
+
         private void btn_Search_Click(object sender, EventArgs e)
         {
             if (textBox_testItem.Text != "")
@@ -238,7 +246,7 @@ namespace Flex_SelectPicture
                     for (int i = 0; i < columnCount; i++)
                     {
                         DataColumn dc = new DataColumn(aryLine[i]);
-//                        if(!dt.Columns.Contains(aryLine[i]))
+                        //                        if(!dt.Columns.Contains(aryLine[i]))
                         dt.Columns.Add(dc);
                     }
                 }
@@ -263,7 +271,7 @@ namespace Flex_SelectPicture
             try
             {
                 temp.Clear();
-                temp = analysisData.DefaultView.ToTable(false,text);
+                temp = analysisData.DefaultView.ToTable(false, text);
                 dataGridView_Result.DataSource = temp;
                 result_list.Clear();//清空测试结果
                 textBox_USL.Text = "";
@@ -279,12 +287,12 @@ namespace Flex_SelectPicture
                 {
                     if (row[text].ToString() != "\\" && row[text].ToString() != "" && row[text].ToString() != "\"\"")
                     {
-                    result_list.Add(double.Parse(row[text].ToString()));
-                        
+                        result_list.Add(double.Parse(row[text].ToString()));
+
                     }
-                    
+
                 }
-                for (int i = temp.Rows.Count-1;i>0; i--)
+                for (int i = temp.Rows.Count - 1; i > 0; i--)
                 {
                     if (temp.Rows[i][text].ToString() == "\\" || temp.Rows[i][text].ToString() == "" || temp.Rows[i][text].ToString() == "\"\"")
                     {
@@ -294,21 +302,21 @@ namespace Flex_SelectPicture
                 //去掉最大最小值
                 if (result_list.Count > 1000)
                 {
-                    for(int i = 0; i < 50; i++)
+                    for (int i = 0; i < 50; i++)
                     {
-                       result_list.Remove(result_list.Max());
-                       result_list.Remove(result_list.Min());
+                        result_list.Remove(result_list.Max());
+                        result_list.Remove(result_list.Min());
                     }
                 }
                 textBox_Max.Text = result_list.Max().ToString("00.000");
                 textBox_Min.Text = result_list.Min().ToString("00.000");
                 textBox_TestCount.Text = result_list.Count.ToString();
-                textBox_AVG.Text =  result_list.Average().ToString("00.000");
+                textBox_AVG.Text = result_list.Average().ToString("00.000");
                 textBox_stdevResult.Text = (Stdev(result_list)).ToString("00.0000");//计算标准差
                 btn_Cp.Text = "计算";
                 btn_CPK.Text = "计算";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 myf.writeErrorLog(ex.ToString());
                 MessageBox.Show(ex.Message);
@@ -327,7 +335,7 @@ namespace Flex_SelectPicture
             double sSum = 0F;
             double tmpStDev = 0F;
             int arrNum = result_list.Count;
-            xSum= result_list.Sum();            
+            xSum = result_list.Sum();
             xAvg = result_list.Average();
             for (int j = 0; j < arrNum; j++)
             {
@@ -353,7 +361,7 @@ namespace Flex_SelectPicture
         {
             try
             {
-               // if (btn_CPK.Text == "计算")
+                // if (btn_CPK.Text == "计算")
 
                 {
                     double xSum = result_list.Sum();
@@ -365,12 +373,12 @@ namespace Flex_SelectPicture
                         sSum += ((result_list[j] - xAvg) * (result_list[j] - xAvg));
                     }
                     tmpStDev = Convert.ToSingle(Math.Sqrt((sSum / (result_list.Count - 1))).ToString());
-                    if (textBox_USL.Text != ""&& textBox_LSL.Text!="")
+                    if (textBox_USL.Text != "" && textBox_LSL.Text != "")
                     {
-                         double usl = double.Parse(textBox_USL.Text);//均值加3sigma
+                        double usl = double.Parse(textBox_USL.Text);//均值加3sigma
                         double lsl = double.Parse(textBox_LSL.Text);//均值减3sigma
                         double USL = double.Parse(textBox_USL.Text) * (double)0.1;
-                        double Cpk = Math.Min(( usl - xAvg) / (3 * tmpStDev), (xAvg -lsl) / (3 * tmpStDev));
+                        double Cpk = Math.Min((usl - xAvg) / (3 * tmpStDev), (xAvg - lsl) / (3 * tmpStDev));
                         btn_CPK.Text = Cpk.ToString("0.0000");
                         LoadDataSource();
                     }
@@ -396,7 +404,7 @@ namespace Flex_SelectPicture
                 }
                 ExportTestResult();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 myf.writeErrorLog(ex.ToString());
                 MessageBox.Show(ex.Message);
@@ -406,44 +414,44 @@ namespace Flex_SelectPicture
 
         private void ExportTestResult()
         {
-            string filename =Application.StartupPath+@"\Export\"+ this.itemName +"_"+ DateTime.Now.ToString("yyyyMMddHHmmss")+@".csv";
+            string filename = Application.StartupPath + @"\Export\" + this.itemName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + @".csv";
             if (!Directory.Exists(Application.StartupPath + @"\Export\")) Directory.CreateDirectory(Application.StartupPath + @"\Export\");
-            string[] files = Directory.GetFiles(Application.StartupPath + @"\Export\",this.itemName+"*.csv");
+            string[] files = Directory.GetFiles(Application.StartupPath + @"\Export\", this.itemName + "*.csv");
             if (files.Length > 0)
             {
                 foreach (string path in files) File.Delete(path);
             }
             // if (!File.Exists(filename)) File.Create(filename);
-            string[] param = new string[]  { "BarCode" , this.itemName} ;
-            DataTable dt =  analysisData.DefaultView.ToTable(false,param);
+            string[] param = new string[] { "BarCode", this.itemName };
+            DataTable dt = analysisData.DefaultView.ToTable(false, param);
             SaveCSV(dt, filename);
             //导出图片
             if (wetherExportPic)
             {
-                string export_Path = Application.StartupPath + @"\Export\Pic\"+this.itemName+"\\"+DateTime.Now.ToString("yyyyMMdd");
+                string export_Path = Application.StartupPath + @"\Export\Pic\" + this.itemName + "\\" + DateTime.Now.ToString("yyyyMMdd");
                 List<string> result = new List<string>();
                 List<string> barcode_list = new List<string>();
                 switch (AVI)
                 {
                     case "1":
-                       string[] filepath = Directory.GetFiles(GlobalVar.gl_val_Machine1_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
+                        string[] filepath = Directory.GetFiles(GlobalVar.gl_val_Machine1_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
                         foreach (string path in filepath)
                         {
-                            result.AddRange(myf.SearchResult(path));
+                            result.AddRange(myf.SearchResult(path, this.itemName));
                         }
                         break;
                     case "2":
                         filepath = Directory.GetFiles(GlobalVar.gl_val_Machine2_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
                         foreach (string path in filepath)
                         {
-                            result.AddRange(myf.SearchResult(path));
+                            result.AddRange(myf.SearchResult(path, this.itemName));
                         }
                         break;
                     case "3":
                         filepath = Directory.GetFiles(GlobalVar.gl_val_Machine3_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
                         foreach (string path in filepath)
                         {
-                            result.AddRange(myf.SearchResult(path));
+                            result.AddRange(myf.SearchResult(path, this.itemName));
                         }
                         break;
                     default:
@@ -451,14 +459,14 @@ namespace Flex_SelectPicture
                 }
                 try
                 {
-                    string temp1 = this.itemName.Substring(this.itemName.IndexOf('_')+1);
-                        string item = temp1.Substring(temp1.IndexOf('_')+1);
+                    string temp1 = this.itemName.Substring(this.itemName.IndexOf('_') + 1);
+                    string item = temp1.Substring(temp1.IndexOf('_') + 1);
                     //获取所有条码
                     foreach (string temp in result)
                     {
                         string[] arr_result = temp.Split('|');
-                       
-                        if (arr_result[1].Contains(item)) barcode_list.Add(arr_result[8]);
+
+                        if (arr_result[1].Contains(item) && ResultBetweenValue(arr_result[9])) barcode_list.Add(arr_result[8]);
                     }
                     foreach (string barcode in barcode_list)
                     {
@@ -478,6 +486,28 @@ namespace Flex_SelectPicture
 
 
         }
+
+        /// <summary>
+        /// 结果是否在范围之内
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private bool ResultBetweenValue(string result)
+        {
+            try
+            {
+                double result_double = Convert.ToDouble(result);
+                double usl = Convert.ToDouble(textBox_USL.Text);
+                double lsl = Convert.ToDouble(textBox_LSL.Text);
+                if (result_double < usl && result_double > lsl) return true;
+                else return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         /// 将DataTable中数据写入到CSV文件中
         ///
         /// 提供保存数据的DataTable
@@ -521,22 +551,23 @@ namespace Flex_SelectPicture
         {
             try
             {
-               // if (btn_Cp.Text == "计算")
+                // if (btn_Cp.Text == "计算")
                 {
                     double temp;
                     temp = 6 * Stdev(result_list);
                     if (textBox_USL.Text != "" && textBox_LSL.Text != "")
                     {
-                        double StanderAver = double.Parse(textBox_USL.Text)-double.Parse(textBox_LSL.Text);
+                        double StanderAver = double.Parse(textBox_USL.Text) - double.Parse(textBox_LSL.Text);
                         double Cp = (StanderAver) / temp;
                         btn_Cp.Text = Cp.ToString("0.0000");
                     }
                     else
                     {
-                        MessageBox.Show("请设置上下限！","Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        MessageBox.Show("请设置上下限！", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 myf.writeErrorLog(ex.ToString());
                 MessageBox.Show(ex.Message);
@@ -637,10 +668,10 @@ namespace Flex_SelectPicture
             chart_Analysis_Poisson.Series[0].Points.Clear();
             chart_Analysis_Poisson.ChartAreas[0].AxisY.StripLines.Clear();
             chart_Analysis_Normal.ChartAreas[0].AxisX.StripLines.Clear();
-            ResetAxisBySampleData(result_list,chart_Analysis_Normal);
+            ResetAxisBySampleData(result_list, chart_Analysis_Normal);
             mostPrecision = GetMostPrecision(result_list);
             double xbar = Math.Round(result_list.Average(), mostPrecision);
-            double sigma = CalculateSigma(result_list,xbar);
+            double sigma = CalculateSigma(result_list, xbar);
             double zoomMultiple = ZoomMultiple(ref mostPrecision);
             double usl = double.Parse(textBox_USL.Text);
             double lsl = double.Parse(textBox_LSL.Text);
@@ -666,17 +697,17 @@ namespace Flex_SelectPicture
             }
 
             //为MSChart绑定数据值
-            AddStripLineX(chart_Analysis_Normal.ChartAreas[0], "期望:"+result_list.Average().ToString("0.000"), xbar, 0.001, Color.Green);
+            AddStripLineX(chart_Analysis_Normal.ChartAreas[0], "期望:" + result_list.Average().ToString("0.000"), xbar, 0.001, Color.Green);
             chart_Analysis_Normal.Series[0].Points.DataBindXY(xValues, yValues);
             #region 数量分布
             List<int> y = new List<int>();
             List<double> xV = new List<double>();
             double temp = result_list.Max() - result_list.Min();
             temp = temp / 10;
-            for(int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 double t1 = result_list.Min() + i * temp;
-                double t2 = result_list.Min() + (i-1)*temp;
+                double t2 = result_list.Min() + (i - 1) * temp;
                 int j = 0;
                 foreach (double tmp in result_list)
                 {
@@ -688,14 +719,14 @@ namespace Flex_SelectPicture
             }
             List<int> xx = new List<int>();
             int num = 0;
-            foreach(double tmp in result_list)
+            foreach (double tmp in result_list)
             {
-                num++; 
+                num++;
                 xx.Add(num);
             }
-            chart_Analysis_Poisson.ChartAreas[0].AxisY.Minimum = result_list.Min() - result_list.Min()/10;
-            chart_Analysis_Poisson.ChartAreas[0].AxisY.Maximum = result_list.Max() + result_list.Max()/10;
-            chart_Analysis_Poisson.Series[0].Points.DataBindXY(xx,result_list);
+            chart_Analysis_Poisson.ChartAreas[0].AxisY.Minimum = result_list.Min() - result_list.Min() / 10;
+            chart_Analysis_Poisson.ChartAreas[0].AxisY.Maximum = result_list.Max() + result_list.Max() / 10;
+            chart_Analysis_Poisson.Series[0].Points.DataBindXY(xx, result_list);
             AddStripLineY(chart_Analysis_Poisson.ChartAreas[0], "Average", xbar, 0.003, Color.Green);
             AddStripLineY(chart_Analysis_Poisson.ChartAreas[0], "USL", usl, 0.003, Color.Red);
             AddStripLineY(chart_Analysis_Poisson.ChartAreas[0], "LSL", lsl, 0.003, Color.Red);
@@ -728,7 +759,7 @@ namespace Flex_SelectPicture
             chart_Analysis_Normal.ChartAreas[0].AxisY.Minimum = (double)Math.Round(yMin, mostPrecision);
             chart_Analysis_Normal.ChartAreas[0].AxisY.Maximum = (double)Math.Round(yMax, mostPrecision);
 
-            
+
 
         }
 
@@ -754,15 +785,15 @@ namespace Flex_SelectPicture
             };
 
             chartArea.AxisY.StripLines.Add(stripLine);
-        }      
+        }
         /// <summary>
-                 /// 添加阈值线
-                 /// </summary>
-                 /// <param name="chartArea">图形Area</param>
-                 /// <param name="lineName">在线显示的名子</param>
-                 /// <param name="lineOffset">线在图上的位置</param>
-                 /// <param name="lineWidth">线宽</param>
-                 /// <param name="lineColor">线的颜色</param>
+        /// 添加阈值线
+        /// </summary>
+        /// <param name="chartArea">图形Area</param>
+        /// <param name="lineName">在线显示的名子</param>
+        /// <param name="lineOffset">线在图上的位置</param>
+        /// <param name="lineWidth">线宽</param>
+        /// <param name="lineColor">线的颜色</param>
         public void AddStripLineX(ChartArea chartArea, string lineName, double lineOffset, double lineWidth, Color lineColor)
         {
             StripLine stripLine = new StripLine
@@ -818,6 +849,11 @@ namespace Flex_SelectPicture
                 lb_ExportPic.Text = "是";
                 wetherExportPic = true;
             }
+        }
+
+        private void textBox_USL_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
         }
     }
 }

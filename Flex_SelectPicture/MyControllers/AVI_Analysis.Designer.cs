@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.toolStrip_analysis = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.lb_S1TestItems = new System.Windows.Forms.ToolStripLabel();
@@ -42,6 +42,9 @@
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.lb_S2TestItems = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
+            this.lb_ExportPic = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.progress_Analysis = new System.Windows.Forms.ToolStripProgressBar();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -77,9 +80,6 @@
             this.chart_Analysis_Normal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chart_Analysis_Poisson = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.lb_ExportPic = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip_analysis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -158,6 +158,26 @@
             this.toolStripTextBox2.Name = "toolStripTextBox2";
             this.toolStripTextBox2.ReadOnly = true;
             this.toolStripTextBox2.Size = new System.Drawing.Size(100, 25);
+            // 
+            // toolStripLabel5
+            // 
+            this.toolStripLabel5.Name = "toolStripLabel5";
+            this.toolStripLabel5.Size = new System.Drawing.Size(159, 22);
+            this.toolStripLabel5.Text = "导出含有该项NG的图片:";
+            // 
+            // lb_ExportPic
+            // 
+            this.lb_ExportPic.Name = "lb_ExportPic";
+            this.lb_ExportPic.Size = new System.Drawing.Size(23, 22);
+            this.lb_ExportPic.Text = "否";
+            this.lb_ExportPic.Click += new System.EventHandler(this.lb_ExportPic_Click);
+            // 
+            // toolStripTextBox3
+            // 
+            this.toolStripTextBox3.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.toolStripTextBox3.Enabled = false;
+            this.toolStripTextBox3.Name = "toolStripTextBox3";
+            this.toolStripTextBox3.Size = new System.Drawing.Size(10, 25);
             // 
             // toolStripLabel2
             // 
@@ -305,6 +325,7 @@
             this.textBox_LSL.Name = "textBox_LSL";
             this.textBox_LSL.Size = new System.Drawing.Size(100, 26);
             this.textBox_LSL.TabIndex = 20;
+            this.textBox_LSL.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_USL_KeyPress);
             // 
             // textBox_AVG
             // 
@@ -399,6 +420,7 @@
             this.textBox_USL.Name = "textBox_USL";
             this.textBox_USL.Size = new System.Drawing.Size(100, 26);
             this.textBox_USL.TabIndex = 4;
+            this.textBox_USL.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_USL_KeyPress);
             // 
             // textBox_Min
             // 
@@ -493,23 +515,23 @@
             // chart_Analysis_Normal
             // 
             this.chart_Analysis_Normal.BackColor = System.Drawing.Color.WhiteSmoke;
-            chartArea11.Name = "ChartArea1";
-            this.chart_Analysis_Normal.ChartAreas.Add(chartArea11);
+            chartArea3.Name = "ChartArea1";
+            this.chart_Analysis_Normal.ChartAreas.Add(chartArea3);
             this.chart_Analysis_Normal.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend11.Name = "Legend1";
-            this.chart_Analysis_Normal.Legends.Add(legend11);
+            legend3.Name = "Legend1";
+            this.chart_Analysis_Normal.Legends.Add(legend3);
             this.chart_Analysis_Normal.Location = new System.Drawing.Point(3, 3);
             this.chart_Analysis_Normal.Name = "chart_Analysis_Normal";
-            series16.ChartArea = "ChartArea1";
-            series16.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series16.Legend = "Legend1";
-            series16.Name = "正态分布";
-            series17.ChartArea = "ChartArea1";
-            series17.Legend = "Legend1";
-            series17.Name = "数量分布";
-            series17.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            this.chart_Analysis_Normal.Series.Add(series16);
-            this.chart_Analysis_Normal.Series.Add(series17);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "正态分布";
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "数量分布";
+            series5.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            this.chart_Analysis_Normal.Series.Add(series4);
+            this.chart_Analysis_Normal.Series.Add(series5);
             this.chart_Analysis_Normal.Size = new System.Drawing.Size(753, 216);
             this.chart_Analysis_Normal.TabIndex = 1;
             this.chart_Analysis_Normal.Text = "Normal Distribution";
@@ -528,43 +550,23 @@
             // chart_Analysis_Poisson
             // 
             this.chart_Analysis_Poisson.BackColor = System.Drawing.Color.WhiteSmoke;
-            chartArea12.Name = "ChartArea1";
-            this.chart_Analysis_Poisson.ChartAreas.Add(chartArea12);
+            chartArea4.Name = "ChartArea1";
+            this.chart_Analysis_Poisson.ChartAreas.Add(chartArea4);
             this.chart_Analysis_Poisson.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend12.Name = "Legend1";
-            this.chart_Analysis_Poisson.Legends.Add(legend12);
+            legend4.Name = "Legend1";
+            this.chart_Analysis_Poisson.Legends.Add(legend4);
             this.chart_Analysis_Poisson.Location = new System.Drawing.Point(3, 3);
             this.chart_Analysis_Poisson.Name = "chart_Analysis_Poisson";
             this.chart_Analysis_Poisson.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series18.ChartArea = "ChartArea1";
-            series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series18.Legend = "Legend1";
-            series18.Name = "分布";
-            series18.YValuesPerPoint = 6;
-            this.chart_Analysis_Poisson.Series.Add(series18);
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Legend = "Legend1";
+            series6.Name = "分布";
+            series6.YValuesPerPoint = 6;
+            this.chart_Analysis_Poisson.Series.Add(series6);
             this.chart_Analysis_Poisson.Size = new System.Drawing.Size(753, 216);
             this.chart_Analysis_Poisson.TabIndex = 1;
             this.chart_Analysis_Poisson.Text = "Poisson Distribution";
-            // 
-            // lb_ExportPic
-            // 
-            this.lb_ExportPic.Name = "lb_ExportPic";
-            this.lb_ExportPic.Size = new System.Drawing.Size(23, 22);
-            this.lb_ExportPic.Text = "否";
-            this.lb_ExportPic.Click += new System.EventHandler(this.lb_ExportPic_Click);
-            // 
-            // toolStripLabel5
-            // 
-            this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(159, 22);
-            this.toolStripLabel5.Text = "导出含有该项NG的图片:";
-            // 
-            // toolStripTextBox3
-            // 
-            this.toolStripTextBox3.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.toolStripTextBox3.Enabled = false;
-            this.toolStripTextBox3.Name = "toolStripTextBox3";
-            this.toolStripTextBox3.Size = new System.Drawing.Size(10, 25);
             // 
             // AVI_Analysis
             // 

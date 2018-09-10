@@ -398,6 +398,45 @@ namespace Flex_SelectPicture
             }
             return result;
         }
+        public List<string> SearchResult(string fullpath,string testItem)
+        {
+            List<string> result = new List<string>();
+            DataTable result_Table = searchResult(fullpath,testItem,true);
+            for (int i = 0; i < result_Table.Rows.Count - 1; i++)
+            {
+                result.Add(result_Table.Rows[i][0] + "|" + result_Table.Rows[i][1] + "|" + result_Table.Rows[i][2] + "|" + result_Table.Rows[i][3] + "|" + result_Table.Rows[i][4] + "|" + result_Table.Rows[i][5] + "|" + result_Table.Rows[i][6] + "|" + result_Table.Rows[i][7] + "|" + result_Table.Rows[i][8]+"|"+result_Table.Rows[i][9]);
+            }
+            return result;
+        }
+
+        private DataTable searchResult(string fullPath,string testItem,bool test=true)
+        {
+            string filePath = fullPath.Substring(0, fullPath.LastIndexOf('\\'));
+            string fileName = fullPath.Substring(fullPath.LastIndexOf('\\') + 1, fullPath.Length - fullPath.LastIndexOf('\\') - 1);
+            string connStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="
+               + filePath + ";Extended Properties='Text;HDR=YES;FMT=Delimited;IMEX=1;'";
+
+            string cmdStr = "select 检测时间,NG项,结果,工站号,主站主,主站副,从站主,从站副,BarCode,"+testItem.Trim()+" from[" + fileName + "]";
+            var conn = new System.Data.OleDb.OleDbConnection(connStr);
+            var retData = new System.Data.DataTable();
+            try
+            {
+                conn.Open();
+                var adapter = new System.Data.OleDb.OleDbDataAdapter(cmdStr, conn);
+                adapter.Fill(retData);
+            }
+            catch (System.Exception ex)
+            {
+                writeErrorLog("查询异常" + ex.ToString());
+            }
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+
+            return retData;
+        }
 
         private DataTable searchResult(string fullPath)
         {
