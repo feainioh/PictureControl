@@ -225,45 +225,54 @@ namespace Flex_SelectPicture
             DataTable dt = new DataTable();
             FileStream fs = new FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.Default);
-            //记录每次读取的一行记录
-            string strLine = "";
-            //记录每行记录中的各字段内容
-            string[] aryLine;
-            //标示列数
-            int columnCount = 0;
-            //标示是否是读取的第一行
-            bool IsFirst = true;
-
-            //逐行读取CSV中的数据
-            while ((strLine = sr.ReadLine()) != null)
+            try
             {
-                aryLine = strLine.Split(',');
-                if (IsFirst == true)
-                {
-                    IsFirst = false;
-                    columnCount = aryLine.Length;
-                    //创建列
-                    for (int i = 0; i < columnCount; i++)
-                    {
-                        DataColumn dc = new DataColumn(aryLine[i]);
-                        //                        if(!dt.Columns.Contains(aryLine[i]))
-                        dt.Columns.Add(dc);
-                    }
-                }
-                else
-                {
-                    DataRow dr = dt.NewRow();
-                    for (int j = 0; j < columnCount; j++)
-                    {
-                        dr[j] = aryLine[j];
-                    }
-                    dt.Rows.Add(dr);
-                }
-            }
+                //记录每次读取的一行记录
+                string strLine = "";
+                //记录每行记录中的各字段内容
+                string[] aryLine;
+                //标示列数
+                int columnCount = 0;
+                //标示是否是读取的第一行
+                bool IsFirst = true;
 
-            sr.Close();
-            fs.Close();
-            return dt;
+                //逐行读取CSV中的数据
+                while ((strLine = sr.ReadLine()) != null)
+                {
+                    aryLine = strLine.Split(',');
+                    if (IsFirst == true)
+                    {
+                        IsFirst = false;
+                        columnCount = aryLine.Length;
+                        //创建列
+                        for (int i = 0; i < columnCount; i++)
+                        {
+                            DataColumn dc = new DataColumn(aryLine[i]);
+                            if (!dt.Columns.Contains((aryLine[i])))
+                                dt.Columns.Add(dc);
+                        }
+                    }
+                    else
+                    {
+                        DataRow dr = dt.NewRow();
+                        for (int j = 0; j < columnCount; j++)
+                        {
+                            dr[j] = aryLine[j];
+                        }
+                        dt.Rows.Add(dr);
+                    }
+                }
+                return dt;
+            }
+            catch
+            {
+                return dt;
+            }
+            finally
+            {
+                sr.Close();
+                fs.Close();
+            }
         }
 
         private void LoadResultByItem(string text)
@@ -853,7 +862,7 @@ namespace Flex_SelectPicture
 
         private void textBox_USL_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
+
         }
     }
 }
