@@ -102,7 +102,8 @@ namespace Flex_SelectPicture
                     {
                         //ds.Tables[i].Rows[j].ItemArray.CopyTo(objArray, 0);    //将表的一行的值存放数组中。
                         objList.Add(ds.Tables[i].Rows[j].ItemArray);
-                        newDataTable.Rows.Add(objList.ToArray());                       //将数组的值添加到新表中。
+                        objArray = ds.Tables[i].Rows[j].ItemArray;
+                        newDataTable.Rows.Add(objArray);                       //将数组的值添加到新表中。
                     }
                 }
                 return newDataTable;
@@ -296,6 +297,7 @@ namespace Flex_SelectPicture
                 {
                     if (row[text].ToString() != "\\" && row[text].ToString() != "" && row[text].ToString() != "\"\"")
                     {
+                        if(IsNum(row[text].ToString()))
                         result_list.Add(double.Parse(row[text].ToString()));
 
                     }
@@ -332,6 +334,20 @@ namespace Flex_SelectPicture
                 this.FindForm().Close();
             }
         }
+
+        private bool IsNum(string v)
+        {
+            try
+            {
+                double.Parse(v);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// 计算标准差
         /// </summary>
@@ -438,6 +454,7 @@ namespace Flex_SelectPicture
             if (wetherExportPic)
             {
                 string export_Path = Application.StartupPath + @"\Export\Pic\" + this.itemName + "\\" + DateTime.Now.ToString("yyyyMMdd");
+                if (!Directory.Exists(export_Path)) Directory.CreateDirectory(export_Path);
                 List<string> result = new List<string>();
                 List<string> barcode_list = new List<string>();
                 switch (AVI)
@@ -862,6 +879,18 @@ namespace Flex_SelectPicture
 
         private void textBox_USL_KeyPress(object sender, KeyPressEventArgs e)
         {
+
+        }
+
+        private void listView_TestItems_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            //========================================================设置选择条目背景颜色
+
+            if (listView_TestItems.SelectedIndices.Count > 0)         //若有选中项 
+            {
+                    listView_TestItems.Items[listView_TestItems.SelectedIndices[0]].BackColor = Color.SkyBlue; //设置选中项的背景颜色 
+                
+            }
 
         }
     }

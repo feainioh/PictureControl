@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.toolStrip_analysis = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.lb_S1TestItems = new System.Windows.Forms.ToolStripLabel();
@@ -216,6 +216,7 @@
             this.NO,
             this.testItem});
             this.listView_TestItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView_TestItems.FullRowSelect = true;
             this.listView_TestItems.GridLines = true;
             this.listView_TestItems.Location = new System.Drawing.Point(0, 28);
             this.listView_TestItems.Name = "listView_TestItems";
@@ -223,6 +224,7 @@
             this.listView_TestItems.TabIndex = 5;
             this.listView_TestItems.UseCompatibleStateImageBehavior = false;
             this.listView_TestItems.View = System.Windows.Forms.View.Details;
+            this.listView_TestItems.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listView_TestItems_ItemSelectionChanged);
             this.listView_TestItems.SelectedIndexChanged += new System.EventHandler(this.listView_TestItems_SelectedIndexChanged);
             // 
             // NO
@@ -233,7 +235,7 @@
             // testItem
             // 
             this.testItem.Text = "测试项";
-            this.testItem.Width = 121;
+            this.testItem.Width = 140;
             // 
             // panel2
             // 
@@ -515,23 +517,23 @@
             // chart_Analysis_Normal
             // 
             this.chart_Analysis_Normal.BackColor = System.Drawing.Color.WhiteSmoke;
-            chartArea3.Name = "ChartArea1";
-            this.chart_Analysis_Normal.ChartAreas.Add(chartArea3);
+            chartArea5.Name = "ChartArea1";
+            this.chart_Analysis_Normal.ChartAreas.Add(chartArea5);
             this.chart_Analysis_Normal.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.chart_Analysis_Normal.Legends.Add(legend3);
+            legend5.Name = "Legend1";
+            this.chart_Analysis_Normal.Legends.Add(legend5);
             this.chart_Analysis_Normal.Location = new System.Drawing.Point(3, 3);
             this.chart_Analysis_Normal.Name = "chart_Analysis_Normal";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Legend = "Legend1";
-            series4.Name = "正态分布";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "数量分布";
-            series5.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            this.chart_Analysis_Normal.Series.Add(series4);
-            this.chart_Analysis_Normal.Series.Add(series5);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series7.Legend = "Legend1";
+            series7.Name = "正态分布";
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "数量分布";
+            series8.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            this.chart_Analysis_Normal.Series.Add(series7);
+            this.chart_Analysis_Normal.Series.Add(series8);
             this.chart_Analysis_Normal.Size = new System.Drawing.Size(753, 216);
             this.chart_Analysis_Normal.TabIndex = 1;
             this.chart_Analysis_Normal.Text = "Normal Distribution";
@@ -550,20 +552,20 @@
             // chart_Analysis_Poisson
             // 
             this.chart_Analysis_Poisson.BackColor = System.Drawing.Color.WhiteSmoke;
-            chartArea4.Name = "ChartArea1";
-            this.chart_Analysis_Poisson.ChartAreas.Add(chartArea4);
+            chartArea6.Name = "ChartArea1";
+            this.chart_Analysis_Poisson.ChartAreas.Add(chartArea6);
             this.chart_Analysis_Poisson.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chart_Analysis_Poisson.Legends.Add(legend4);
+            legend6.Name = "Legend1";
+            this.chart_Analysis_Poisson.Legends.Add(legend6);
             this.chart_Analysis_Poisson.Location = new System.Drawing.Point(3, 3);
             this.chart_Analysis_Poisson.Name = "chart_Analysis_Poisson";
             this.chart_Analysis_Poisson.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Legend = "Legend1";
-            series6.Name = "分布";
-            series6.YValuesPerPoint = 6;
-            this.chart_Analysis_Poisson.Series.Add(series6);
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series9.Legend = "Legend1";
+            series9.Name = "分布";
+            series9.YValuesPerPoint = 6;
+            this.chart_Analysis_Poisson.Series.Add(series9);
             this.chart_Analysis_Poisson.Size = new System.Drawing.Size(753, 216);
             this.chart_Analysis_Poisson.TabIndex = 1;
             this.chart_Analysis_Poisson.Text = "Poisson Distribution";
