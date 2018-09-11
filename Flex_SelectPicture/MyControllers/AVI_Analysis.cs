@@ -297,9 +297,8 @@ namespace Flex_SelectPicture
                 {
                     if (row[text].ToString() != "\\" && row[text].ToString() != "" && row[text].ToString() != "\"\"")
                     {
-                        if(IsNum(row[text].ToString()))
-                        result_list.Add(double.Parse(row[text].ToString()));
-
+                        if (IsNum(row[text].ToString()))
+                            result_list.Add(double.Parse(row[text].ToString()));
                     }
 
                 }
@@ -888,8 +887,8 @@ namespace Flex_SelectPicture
 
             if (listView_TestItems.SelectedIndices.Count > 0)         //若有选中项 
             {
-                    listView_TestItems.Items[listView_TestItems.SelectedIndices[0]].BackColor = Color.SkyBlue; //设置选中项的背景颜色 
-                
+                listView_TestItems.Items[listView_TestItems.SelectedIndices[0]].BackColor = Color.SkyBlue; //设置选中项的背景颜色 
+
             }
 
         }
