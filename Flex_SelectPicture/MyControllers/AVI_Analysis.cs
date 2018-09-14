@@ -526,7 +526,7 @@ namespace Flex_SelectPicture
                                 if (cb_export.Checked)
                                 {
                                     if (!Directory.Exists(export_Path + "\\" + barcode)) Directory.CreateDirectory(export_Path + "\\" + barcode);
-                                    string fileName_Path = export_Path + "\\" + barcode +"\\"+ filefullName;
+                                    string fileName_Path = export_Path + "\\" + barcode + "\\" + filefullName;
                                     if (!File.Exists(fileName_Path))
                                         file.CopyTo(fileName_Path);
                                 }
@@ -559,10 +559,17 @@ namespace Flex_SelectPicture
                                         if (!File.Exists(fileName_Path))
                                             file.CopyTo(fileName_Path);
                                     }
+                                    else if (path.Contains("主站"))
+                                    {
+                                        if (!Directory.Exists(export_Path + "\\主站\\")) Directory.CreateDirectory(export_Path + "\\主站\\");
+                                        string fileName_Path = export_Path + "\\主站\\" + filefullName;
+                                        if (!File.Exists(fileName_Path))
+                                            file.CopyTo(fileName_Path);
+                                    }
                                     else
                                     {
-                                        if (!Directory.Exists(export_Path + "\\" + barcode)) Directory.CreateDirectory(export_Path + "\\" + barcode);
-                                        string fileName_Path = export_Path + "\\" + barcode + "\\" + filefullName;
+                                        if (!Directory.Exists(export_Path + "\\TEMP")) Directory.CreateDirectory(export_Path + "\\TEMP");
+                                        string fileName_Path = export_Path + "\\TEMP\\" + filefullName;
                                         if (!File.Exists(fileName_Path))
                                             file.CopyTo(fileName_Path);
                                     }
