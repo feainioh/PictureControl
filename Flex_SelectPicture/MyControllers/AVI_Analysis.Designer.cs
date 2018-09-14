@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.toolStrip_analysis = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.lb_S1TestItems = new System.Windows.Forms.ToolStripLabel();
@@ -80,6 +80,8 @@
             this.chart_Analysis_Normal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chart_Analysis_Poisson = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btn_export = new System.Windows.Forms.Button();
+            this.cb_export = new System.Windows.Forms.CheckBox();
             this.toolStrip_analysis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -287,6 +289,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cb_export);
+            this.panel1.Controls.Add(this.btn_export);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.textBox_LSL);
             this.panel1.Controls.Add(this.textBox_AVG);
@@ -518,23 +522,23 @@
             // chart_Analysis_Normal
             // 
             this.chart_Analysis_Normal.BackColor = System.Drawing.Color.WhiteSmoke;
-            chartArea7.Name = "ChartArea1";
-            this.chart_Analysis_Normal.ChartAreas.Add(chartArea7);
+            chartArea3.Name = "ChartArea1";
+            this.chart_Analysis_Normal.ChartAreas.Add(chartArea3);
             this.chart_Analysis_Normal.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend7.Name = "Legend1";
-            this.chart_Analysis_Normal.Legends.Add(legend7);
+            legend3.Name = "Legend1";
+            this.chart_Analysis_Normal.Legends.Add(legend3);
             this.chart_Analysis_Normal.Location = new System.Drawing.Point(3, 3);
             this.chart_Analysis_Normal.Name = "chart_Analysis_Normal";
-            series10.ChartArea = "ChartArea1";
-            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series10.Legend = "Legend1";
-            series10.Name = "正态分布";
-            series11.ChartArea = "ChartArea1";
-            series11.Legend = "Legend1";
-            series11.Name = "数量分布";
-            series11.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            this.chart_Analysis_Normal.Series.Add(series10);
-            this.chart_Analysis_Normal.Series.Add(series11);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "正态分布";
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "数量分布";
+            series5.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            this.chart_Analysis_Normal.Series.Add(series4);
+            this.chart_Analysis_Normal.Series.Add(series5);
             this.chart_Analysis_Normal.Size = new System.Drawing.Size(753, 216);
             this.chart_Analysis_Normal.TabIndex = 1;
             this.chart_Analysis_Normal.Text = "Normal Distribution";
@@ -553,23 +557,45 @@
             // chart_Analysis_Poisson
             // 
             this.chart_Analysis_Poisson.BackColor = System.Drawing.Color.WhiteSmoke;
-            chartArea8.Name = "ChartArea1";
-            this.chart_Analysis_Poisson.ChartAreas.Add(chartArea8);
+            chartArea4.Name = "ChartArea1";
+            this.chart_Analysis_Poisson.ChartAreas.Add(chartArea4);
             this.chart_Analysis_Poisson.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend8.Name = "Legend1";
-            this.chart_Analysis_Poisson.Legends.Add(legend8);
+            legend4.Name = "Legend1";
+            this.chart_Analysis_Poisson.Legends.Add(legend4);
             this.chart_Analysis_Poisson.Location = new System.Drawing.Point(3, 3);
             this.chart_Analysis_Poisson.Name = "chart_Analysis_Poisson";
             this.chart_Analysis_Poisson.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series12.ChartArea = "ChartArea1";
-            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series12.Legend = "Legend1";
-            series12.Name = "分布";
-            series12.YValuesPerPoint = 6;
-            this.chart_Analysis_Poisson.Series.Add(series12);
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Legend = "Legend1";
+            series6.Name = "分布";
+            series6.YValuesPerPoint = 6;
+            this.chart_Analysis_Poisson.Series.Add(series6);
             this.chart_Analysis_Poisson.Size = new System.Drawing.Size(753, 216);
             this.chart_Analysis_Poisson.TabIndex = 1;
             this.chart_Analysis_Poisson.Text = "Poisson Distribution";
+            // 
+            // btn_export
+            // 
+            this.btn_export.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn_export.Location = new System.Drawing.Point(487, 88);
+            this.btn_export.Name = "btn_export";
+            this.btn_export.Size = new System.Drawing.Size(97, 31);
+            this.btn_export.TabIndex = 22;
+            this.btn_export.Text = "导出图片";
+            this.btn_export.UseVisualStyleBackColor = true;
+            this.btn_export.Click += new System.EventHandler(this.btn_export_Click);
+            // 
+            // cb_export
+            // 
+            this.cb_export.AutoSize = true;
+            this.cb_export.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb_export.Location = new System.Drawing.Point(321, 88);
+            this.cb_export.Name = "cb_export";
+            this.cb_export.Size = new System.Drawing.Size(164, 29);
+            this.cb_export.TabIndex = 23;
+            this.cb_export.Text = "以条码导出图片";
+            this.cb_export.UseVisualStyleBackColor = true;
             // 
             // AVI_Analysis
             // 
@@ -652,5 +678,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel5;
         private System.Windows.Forms.ToolStripLabel lb_ExportPic;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox3;
+        private System.Windows.Forms.Button btn_export;
+        private System.Windows.Forms.CheckBox cb_export;
     }
 }

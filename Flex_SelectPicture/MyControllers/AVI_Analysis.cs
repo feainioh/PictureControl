@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Flex_SelectPicture
 {
@@ -251,6 +252,12 @@ namespace Flex_SelectPicture
                             DataColumn dc = new DataColumn(aryLine[i]);
                             if (!dt.Columns.Contains((aryLine[i])))
                                 dt.Columns.Add(dc);
+                            else
+                            {
+                                string str = aryLine[i] + "[" + i.ToString() + "]";
+                                dc = new DataColumn(str);
+                                dt.Columns.Add(dc);
+                            }
                         }
                     }
                     else
@@ -449,85 +456,155 @@ namespace Flex_SelectPicture
             string[] param = new string[] { "BarCode", this.itemName };
             DataTable dt = analysisData.DefaultView.ToTable(false, param);
             SaveCSV(dt, filename);
+            //ExportImage(dt);
+        }
+
+        private void ExportImage(DataTable dt)
+        {
             //导出图片
-            if (wetherExportPic)
+            this.BeginInvoke(new Action(() =>
             {
-                string export_Path = Application.StartupPath + @"\Export\Pic\" + this.itemName + "\\" + DateTime.Now.ToString("yyyyMMdd");
-                if (!Directory.Exists(export_Path)) Directory.CreateDirectory(export_Path);
-                List<string> result = new List<string>();
-                List<string> barcode_list = new List<string>();
-                switch (AVI)
+                progress_Analysis.Value = 0;
                 {
-                    case "1":
-                        string[] filepath = Directory.GetFiles(GlobalVar.gl_val_Machine1_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
-                        foreach (string path in filepath)
-                        {
-                            result.AddRange(myf.SearchResult(path, this.itemName));
-                        }
-                        break;
-                    case "2":
-                        filepath = Directory.GetFiles(GlobalVar.gl_val_Machine2_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
-                        foreach (string path in filepath)
-                        {
-                            result.AddRange(myf.SearchResult(path, this.itemName));
-                        }
-                        break;
-                    case "3":
-                        filepath = Directory.GetFiles(GlobalVar.gl_val_Machine3_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
-                        foreach (string path in filepath)
-                        {
-                            result.AddRange(myf.SearchResult(path, this.itemName));
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                try
-                {
-                    string temp1 = this.itemName.Substring(this.itemName.IndexOf('_') + 1);
-                    string item = temp1.Substring(temp1.IndexOf('_') + 1);
-                    //获取所有条码
-                    foreach (string temp in result)
+                    string export_Path = Application.StartupPath + @"\Export\Pic\" + this.itemName + "\\" + DateTime.Now.ToString("yyyyMMddHHmm");
+                    if (!Directory.Exists(export_Path)) Directory.CreateDirectory(export_Path);
+                    List<string> result = new List<string>();
+                    List<string> barcode_list = new List<string>();
+                    switch (AVI)
                     {
-                        string[] arr_result = temp.Split('|');
-
-                        if (arr_result[1].Contains(item) && ResultBetweenValue(arr_result[9])) barcode_list.Add(arr_result[8]);
+                        case "1":
+                            string[] filepath = Directory.GetFiles(GlobalVar.gl_val_Machine1_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
+                            foreach (string path in filepath)
+                            {
+                                result.AddRange(myf.SearchResult(path, this.itemName));
+                            }
+                            break;
+                        case "2":
+                            filepath = Directory.GetFiles(GlobalVar.gl_val_Machine2_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
+                            foreach (string path in filepath)
+                            {
+                                result.AddRange(myf.SearchResult(path, this.itemName));
+                            }
+                            break;
+                        case "3":
+                            filepath = Directory.GetFiles(GlobalVar.gl_val_Machine3_S1_TestResult + @"\" + analysisdate.ToString("yyyy-MM-dd"), analysisdate.ToString("yyyyMMdd") + "*.csv");
+                            foreach (string path in filepath)
+                            {
+                                result.AddRange(myf.SearchResult(path, this.itemName));
+                            }
+                            break;
+                        default:
+                            break;
                     }
-                    foreach (string barcode in barcode_list)
+                    progress_Analysis.Value = 30;
+                    try
                     {
-                        string[] paths = myf.searchImageByBarcode(barcode);
-                        foreach (string path in paths)
+                        string temp1 = this.itemName.Substring(this.itemName.IndexOf('_') + 1);
+                        string item = temp1.Substring(temp1.IndexOf('_') + 1);
+                        //获取所有条码
+                        foreach (string temp in result)
                         {
-                            FileInfo file = new FileInfo(path);
-                            file.CopyTo(export_Path + "\\" + barcode + ".jpg");
+                            string[] arr_result = temp.Split('|');
+                            if (wetherExportPic)
+                            {
+                                if (arr_result[1].Contains(item) && ResultBetweenValue(arr_result[8], dt)) barcode_list.Add(arr_result[8]);
+                            }
+                            else
+                            {
+                                if (ResultBetweenValue(arr_result[8], dt)) barcode_list.Add(arr_result[8]);
+                            }
                         }
+                        progress_Analysis.Value = 60;
+                        foreach (string barcode in barcode_list)
+                        {
+                            if (barcode.Length < 16) continue;
+                            string[] paths = myf.FindAllImageByBarcode(barcode);
+                            foreach (string path in paths)
+                            {
+                                FileInfo file = new FileInfo(path);
+                                string filefullName = file.Name;
+                                if (cb_export.Checked)
+                                {
+                                    if (!Directory.Exists(export_Path + "\\" + barcode)) Directory.CreateDirectory(export_Path + "\\" + barcode);
+                                    string fileName_Path = export_Path + "\\" + barcode +"\\"+ filefullName;
+                                    if (!File.Exists(fileName_Path))
+                                        file.CopyTo(fileName_Path);
+                                }
+                                else
+                                {
+                                    if (path.Contains("主站主"))
+                                    {
+                                        if (!Directory.Exists(export_Path + "\\主站主")) Directory.CreateDirectory(export_Path + "\\主站主");
+                                        string fileName_Path = export_Path + "\\主站主\\" + filefullName;
+                                        if (!File.Exists(fileName_Path))
+                                            file.CopyTo(fileName_Path);
+                                    }
+                                    else if (path.Contains("从站主"))
+                                    {
+                                        if (!Directory.Exists(export_Path + "\\从站主")) Directory.CreateDirectory(export_Path + "\\从站主");
+                                        string fileName_Path = export_Path + "\\从站主\\" + filefullName;
+                                        if (!File.Exists(fileName_Path)) file.CopyTo(fileName_Path);
+                                    }
+                                    else if (path.Contains("从站副"))
+                                    {
+                                        if (!Directory.Exists(export_Path + "\\从站副\\")) Directory.CreateDirectory(export_Path + "\\从站副\\");
+                                        string fileName_Path = export_Path + "\\从站副\\" + filefullName;
+                                        if (!File.Exists(fileName_Path))
+                                            file.CopyTo(fileName_Path);
+                                    }
+                                    else if (path.Contains("主站副"))
+                                    {
+                                        if (!Directory.Exists(export_Path + "\\主站副\\")) Directory.CreateDirectory(export_Path + "\\主站副\\");
+                                        string fileName_Path = export_Path + "\\主站副\\" + filefullName;
+                                        if (!File.Exists(fileName_Path))
+                                            file.CopyTo(fileName_Path);
+                                    }
+                                    else
+                                    {
+                                        if (!Directory.Exists(export_Path + "\\" + barcode)) Directory.CreateDirectory(export_Path + "\\" + barcode);
+                                        string fileName_Path = export_Path + "\\" + barcode + "\\" + filefullName;
+                                        if (!File.Exists(fileName_Path))
+                                            file.CopyTo(fileName_Path);
+                                    }
+                                }
+                            }
+                        }
+                        progress_Analysis.Value = 100;
+                        MessageBox.Show("导出完成!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("导出异常!" + ex.ToString());
                     }
                 }
-                catch
-                {
-                    MessageBox.Show("导出异常!");
-                }
-            }
-
-
+            }));
         }
 
         /// <summary>
         /// 结果是否在范围之内
         /// </summary>
-        /// <param name="result"></param>
+        /// <param name="result">条码</param>
         /// <returns></returns>
-        private bool ResultBetweenValue(string result)
+        private bool ResultBetweenValue(string result, DataTable dt)
         {
             try
             {
-                double result_double = Convert.ToDouble(result);
+                int index = 0;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    if (dt.Rows[i][0].ToString().Equals(result))
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+                double result_double = Convert.ToDouble(dt.Rows[index][1].ToString());
                 double usl = Convert.ToDouble(textBox_USL.Text);
                 double lsl = Convert.ToDouble(textBox_LSL.Text);
-                if (result_double < usl && result_double > lsl) return true;
+                if (result_double <= usl && result_double >= lsl) return true;
                 else return false;
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }
@@ -891,6 +968,18 @@ namespace Flex_SelectPicture
 
             }
 
+        }
+
+        private void btn_export_Click(object sender, EventArgs e)
+        {
+            string[] param = new string[] { "BarCode", this.itemName };
+            DataTable dt = analysisData.DefaultView.ToTable(false, param);
+            Thread thread = new Thread(new ThreadStart(delegate
+            {
+                ExportImage(dt);
+            }));
+            thread.IsBackground = true;
+            thread.Start();
         }
     }
 }
